@@ -1,29 +1,80 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { HomeConnected } from './pages/Home';
-import NoMatch from './pages/NoMatch';
+import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import HomeConnected from './pages/Home';
+import LoginConnected from './pages/Login';
+import Cookies from 'js-cookie';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-       <Router>
-        <div className="app">
-          <h1>Weather Example App</h1>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-          </ul>
-          <hr/>
-          <Switch>
-            <Route exact path="/" component={HomeConnected} />
-            <Route exact path="/about" component={() => <p>About page</p>} />
-            <Route component={NoMatch} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+	state = {
+		auth: false,
+		width: window.innerWidth,
+		height: window.innerHeight,
+	};
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		console.log('nextProps: ', nextProps);
+		const session = nextProps.session && nextProps.session[0] && nextProps.session[0];
+		if (session.status) {
+			this.setState({
+				auth: true,
+			});
+			toast.success('Login Success!', {
+				position: toast.POSITION.TOP_CENTER,
+			});
+			Cookies.set('users', 'logined');
+			Cookies.set('nameStaff', session.name);
+
+			this.setState({ redirect: true });
+		} else {
+			this.setState({
+				auth: false,
+			});
+			toast.error(session.message, {
+				position: toast.POSITION.TOP_CENTER,
+			});
+		}
+	}
+
+	getCookieUser = () => {
+		const user = Cookies.get('users');
+		if (user && user === 'logined') {
+			this.setState({
+				auth: true,
+			});
+		} else {
+			this.setState({
+				auth: false,
+			});
+		}
+	};
+
+	logout = () => {
+		Cookies.remove('users');
+		Cookies.remove('nameStaff');
+		this.setState({
+			auth: false,
+		});
+	};
+	componentDidMount() {
+		this.getCookieUser();
+	}
+
+	render() {
+		// console.log('APP state: ', this.props);
+		return (
+			<div style={{ width: this.state.width, height: this.state.height }}>
+				{this.state.auth ? <HomeConnected logout={this.logout} /> : <LoginConnected />}
+				<ToastContainer />
+			</div>
+		);
+	}
 }
 
-export default App;
+const mapStateToProps = ({ users }) => users;
+
+const mapDispatchToProps = {};
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default AppContainer;

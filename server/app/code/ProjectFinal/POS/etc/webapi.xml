@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+<!--    STAFF LOGIN IN TO POS MACHINE-->
+    <route url="/V1/staff/login" method="POST">
+        <service class="ProjectFinal\POS\Api\StaffManagementInterface" method="authenticate"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/staff/product" method="GET">
+        <service class="ProjectFinal\POS\Api\ProductRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/cartPOS/:cartId/items" method="POST">
+        <service class="ProjectFinal\POS\Api\CartItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/cartPOS/:cartId/items" method="GET">
+        <service class="ProjectFinal\POS\Api\CartItemRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/cartPOS/:cartId/items/:itemId" method="PUT">
+        <service class="ProjectFinal\POS\Api\CartItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/cartPOS/:cartId/items/:itemId" method="DELETE">
+        <service class="ProjectFinal\POS\Api\CartItemRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/cartPOS/:cartId/checkout" method="POST">
+        <service class="ProjectFinal\POS\Api\OrderPOSManagementInterface" method="savePaymentInformationAndShippingInformation"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

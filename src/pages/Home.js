@@ -1,59 +1,42 @@
 import React from 'react';
-import { connect } from "react-redux";
-import Choices from '../components/Choices'
-import Box from '../components/Box';
-import {
-  updateCityAction,
-  fetchCityAction,
-  getStopAction
-} from '../actions/cityActions';
-import { loadingAction } from '../actions/uiActions';
+import { connect } from 'react-redux';
+import './home.css';
+import { requestGetProduct } from '../actions/productActions';
+import InfoStaff from '../components/InfoStaff';
+import Search from '../components/Search';
+import ProductList from '../components/ProductList';
+import Cart from '../components/Cart';
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.fetchData = this.fetchData.bind(this);
-  }
+	constructor(props) {
+		super(props);
+	}
 
-  fetchData(city) {
-    return () => {
-      this.props.dispatchLoading(true);
-      this.props.dispatchFetchCity(city);
-    }
-  }
+	render() {
+		return (
+			<div className="container-fluid h-100 border">
+				<div className="row h-15 p-4">
+					<InfoStaff />
+					<Search logout={this.props.logout} />
+				</div>
+				<div className="row h-85 p-2 border">
+					<div className="col-3" style={{ height: window.innerHeight }}>
+						<Cart />
+					</div>
+					<div className="col-9 h-100">
+						<ProductList />
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
 
-  componentDidMount() {
-    this.props.history.listen((location, action) => { // https://stackoverflow.com/questions/41911309/how-to-listen-to-route-changes-in-react-router-v4
-      this.props.dispatchStopFetch(); // Cancellation
-      this.props.dispatchLoading(false);
-    });
-  }
-
-  render() {
-    const errorScreen = <p className="error"> Error: {this.props.error && this.props.error.message}</p>;
-    const loading = <p> Loading... </p>;
-
-    return (
-      <div>
-        <Choices eventSub={this.fetchData} choices={this.props.choices}/>
-        <Box city={this.props.city} data={this.props.data} loading={this.props.loading}/>
-        {this.props.loading && loading}
-        {this.props.error && errorScreen}
-      </div>
-    );
-  }
-};
-
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = {
-  dispatchUpdateCity: updateCityAction,
-  dispatchFetchCity: fetchCityAction,
-  dispatchStopFetch: getStopAction,
-  dispatchLoading: loadingAction
+	requestGetProduct,
 };
 
-export const HomeConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+const HomeConnected = connect(null, null)(Home);
+export default HomeConnected;

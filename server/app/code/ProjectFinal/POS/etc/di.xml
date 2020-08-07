@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="ProjectFinal\POS\Api\Data\StaffInterface" type="ProjectFinal\POS\Model\Staff" />
+    <preference for="ProjectFinal\POS\Api\StaffManagementInterface" type="ProjectFinal\POS\Model\StaffManagement" />
+
+    <preference for="ProjectFinal\POS\Api\Data\StaffInterface" type="ProjectFinal\POS\Model\Staff" />
+
+    <preference for="ProjectFinal\POS\Api\ProductRepositoryInterface" type="ProjectFinal\POS\Model\ProductRepository" />
+    <preference for="ProjectFinal\POS\Api\CartItemRepositoryInterface" type="ProjectFinal\POS\Model\CartItemRepository" />
+    <preference for="ProjectFinal\POS\Api\OrderPOSManagementInterface" type="ProjectFinal\POS\Model\OrderPOSManagement" />
+    <preference for="Magento\Ui\Model\Export\MetadataProvider" type="ProjectFinal\POS\Model\Export\MetadataProvider" />
+
+
+    <virtualType name="ProjectFinal\POS\Model\ResourceModel\Staff\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">pos_staff</argument>
+            <argument name="resourceModel" xsi:type="string">ProjectFinal\POS\Model\ResourceModel\Staff</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="staff_list_data_source" xsi:type="string">ProjectFinal\POS\Model\ResourceModel\Staff\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,28 +1,11 @@
-import { UPDATE_CITY } from '../actions/cityActions';
-import {
-  FETCH_ERROR,
-  UI_LOADING
-} from '../actions/uiActions';
+import { combineReducers } from 'redux';
+import loginReducers from './loginReducers';
+import productReducers from './productReducers';
+import cartReducers from './cartReducers';
 
-export default function(state, action) {
-  switch (action.type) {
-    case UPDATE_CITY:
-      return {
-        ...state,
-        city: action.payload.city,
-        data: action.payload.data
-      }
-    case FETCH_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      }
-    case UI_LOADING:
-      return {
-        ...state,
-        loading: action.payload
-      };
-    default:
-      return state;
-  }
-};
+const rootReducer = combineReducers({
+	users: loginReducers,
+	products: productReducers,
+	carts: cartReducers,
+});
+export default rootReducer;
