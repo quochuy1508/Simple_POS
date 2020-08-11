@@ -13,14 +13,12 @@ const deleteCartEpic = (action$) =>
 	action$.pipe(
 		ofType(REQUEST_DELETE_CART),
 		mergeMap(({ payload }) => {
-			console.log('payload: ', payload);
 			const quoteId = Cookie.get('quoteId');
 
 			const API_HOST = `http://localhost:80/quochuy/rest/V1/cartPOS/` + quoteId + '/items/' + payload.id;
 
 			return ajax.delete(API_HOST).pipe(
 				map((response) => {
-					console.log('response: ', response);
 					const status = response && response.status === 200;
 					if (status) {
 						return processDeleteCart(DELETE_CART_SUCCESS, payload.id);
@@ -29,7 +27,7 @@ const deleteCartEpic = (action$) =>
 					}
 				}),
 				catchError((error) => {
-					console.log('error: ', error);
+					return processDeleteCart(DELETE_CART_FAIL, error);
 				})
 			);
 		})

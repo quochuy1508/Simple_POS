@@ -1,19 +1,13 @@
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { ofType } from 'redux-observable';
-import {
-	processAddToCart,
-	REQUEST_ADD_TO_CART,
-	ADD_TO_CART_SUCCESS,
-	ADD_TO_CART_FAIL,
-} from '../actions/productActions';
+import { processAddToCart, REQUEST_ADD_TO_CART, ADD_TO_CART_SUCCESS } from '../actions/productActions';
 import Cookie from 'js-cookie';
 
 const addToCartEpic = (action$) =>
 	action$.pipe(
 		ofType(REQUEST_ADD_TO_CART),
 		mergeMap(({ payload }) => {
-			console.log('payload: ', payload);
 			const quoteId = Cookie.get('quoteId');
 			const addCartBody = {
 				cartItem: {
@@ -29,7 +23,6 @@ const addToCartEpic = (action$) =>
 
 			return ajax.post(API_HOST, addCartBody, { 'Content-Type': 'application/json' }).pipe(
 				map((response) => {
-					// console.log('response: ', response);
 					const status = response && response.status === 200;
 					if (status) {
 						return processAddToCart(ADD_TO_CART_SUCCESS, response.response);
@@ -38,7 +31,7 @@ const addToCartEpic = (action$) =>
 					}
 				}),
 				catchError((error) => {
-					console.log('error: ', error);
+					return processAddToCart(ADD_TO_CART_SUCCESS, [error]);
 				})
 			);
 		})

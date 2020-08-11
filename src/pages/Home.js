@@ -1,17 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './home.css';
-import { requestGetProduct } from '../actions/productActions';
 import InfoStaff from '../components/InfoStaff';
 import Search from '../components/Search';
 import ProductList from '../components/ProductList';
 import Cart from '../components/Cart';
+import PropTypes from 'prop-types';
 
 class Home extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<div className="container-fluid h-100 border">
@@ -32,11 +28,15 @@ class Home extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = {
-	requestGetProduct,
+Home.propTypes = {
+	logout: PropTypes.func,
 };
+
+// const mapStateToProps = (state) => state;
+
+// const mapDispatchToProps = {
+// 	requestGetProduct,
+// };
 
 const HomeConnected = connect(null, null)(Home);
 export default HomeConnected;

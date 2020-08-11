@@ -1,7 +1,7 @@
-import { mergeMap, map, catchError, of } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { ofType } from 'redux-observable';
-import { processGetCart, REQUEST_GET_CART, GET_CART_SUCCESS, GET_CART_FAIL } from '../actions/productActions';
+import { processGetCart, REQUEST_GET_CART, GET_CART_SUCCESS } from '../actions/productActions';
 import Cookie from 'js-cookie';
 
 const getCartEpic = (action$) =>
@@ -21,7 +21,9 @@ const getCartEpic = (action$) =>
 						return processGetCart(GET_CART_SUCCESS, []);
 					}
 				}),
-				catchError((error) => processGetCart(GET_CART_SUCCESS, []))
+				catchError((error) => {
+					return processGetCart(GET_CART_SUCCESS, [error]);
+				})
 			);
 		})
 	);

@@ -2,13 +2,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { ofType } from 'redux-observable';
 import Cookie from 'js-cookie';
-import {
-	processCheckout,
-	REQUEST_CHECKOUT,
-	CHECKOUT_SUCCESS,
-	CHECKOUT_FAIL,
-	requestCreateQuote,
-} from '../actions/productActions';
+import { processCheckout, REQUEST_CHECKOUT, CHECKOUT_FAIL, requestCreateQuote } from '../actions/productActions';
 import { toast } from 'react-toastify';
 
 const quoteIdEpic = (action$) =>
@@ -57,7 +51,6 @@ const quoteIdEpic = (action$) =>
 
 			return ajax.post(API_CHECKOUT, JSON.stringify(paramCheckout), { 'Content-Type': 'application/json' }).pipe(
 				map((response) => {
-					// console.log('response: ', response);
 					const status = response && response.status === 200;
 					if (status) {
 						toast.success('Checkout Success!', {
@@ -70,7 +63,7 @@ const quoteIdEpic = (action$) =>
 					}
 				}),
 				catchError((error) => {
-					console.log('error: ', error);
+					return processCheckout(CHECKOUT_FAIL, error);
 				})
 			);
 		})

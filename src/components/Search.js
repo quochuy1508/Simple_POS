@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { requestGetProduct } from '../actions/productActions';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Search extends Component {
 	constructor(props) {
@@ -20,7 +21,6 @@ class Search extends Component {
 		const target = event.target;
 		const name = target.name;
 		const value = target.value;
-		console.log(name, value);
 		this.setState({
 			[name]: value,
 		});
@@ -77,8 +77,11 @@ class Search extends Component {
 	}
 }
 
-const mapStateToProps = (state) => state;
-
+// const mapStateToProps = (state) => state;
+Search.propTypes = {
+	requestGetProduct: PropTypes.func,
+	logout: PropTypes.func,
+};
 const mapDispatchToProps = {
 	requestGetProduct,
 };

@@ -80,14 +80,7 @@ export default function request(url, option) {
 	const cookieEmail = cookie.get('auth_email');
 	// const authEmail = localStorage.getItem('antd-pro-userName') !== "undefined" ? JSON.parse(localStorage.getItem('antd-pro-userName')) : null;
 	const authEmail = cookieEmail !== 'undefined' ? cookieEmail : null;
-	const defaultHeaders = token
-		? {
-				'X-Auth-Email': `${authEmail}`,
-				'X-Auth-Key': `${token}`,
-				// token,
-				// authorization: `Bearer ${token}`,
-		  }
-		: {};
+	const defaultHeaders = token ? { 'X-Auth-Email': `${authEmail}`, 'X-Auth-Key': `${token}` } : {};
 
 	/* const fingerprint = url + (options.body ? JSON.stringify(options.body) : '');
   const hashcode = hash

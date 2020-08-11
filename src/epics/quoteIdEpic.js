@@ -26,7 +26,7 @@ const quoteIdEpic = (action$) =>
 					}
 				}),
 				catchError((error) => {
-					console.log('error: ', error);
+					return processCreateQuote(CREATE_QUOTE_FAIL, error);
 				})
 			);
 		})

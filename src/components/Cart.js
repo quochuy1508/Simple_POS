@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import {
-	REQUEST_GET_CART,
 	requestGetCart,
 	requestCreateQuote,
 	requestCheckout,
@@ -13,11 +13,10 @@ import {
 import Cookie from 'js-cookie';
 
 const Cart = ({ requestGetCart, carts, requestCreateQuote, requestCheckout, requestUpdateCart, requestDeleteCart }) => {
-	console.log('carts: ', carts);
 	const totalCart =
 		(carts &&
 			carts.carts &&
-			carts.carts.reduce((total, currentValue, currentIndex, arr) => {
+			carts.carts.reduce((total, currentValue) => {
 				return (total += currentValue.qty * currentValue.price);
 			}, 0)) ||
 		0;
@@ -43,7 +42,6 @@ const Cart = ({ requestGetCart, carts, requestCreateQuote, requestCheckout, requ
 									<th>Quantity</th>
 									<th className="text-center">Price</th>
 									<th className="text-center">Total</th>
-									<th> </th>
 								</tr>
 							</thead>
 							<tbody>
@@ -162,6 +160,14 @@ const Cart = ({ requestGetCart, carts, requestCreateQuote, requestCheckout, requ
 			</div>
 		</div>
 	);
+};
+Cart.propTypes = {
+	requestGetCart: PropTypes.func,
+	carts: PropTypes.object,
+	requestCreateQuote: PropTypes.func,
+	requestCheckout: PropTypes.func,
+	requestUpdateCart: PropTypes.func,
+	requestDeleteCart: PropTypes.func,
 };
 
 const mapStateToProps = (state) => state;

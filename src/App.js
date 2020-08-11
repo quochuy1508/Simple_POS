@@ -8,13 +8,14 @@ import Cookies from 'js-cookie';
 import './App.css';
 
 class App extends Component {
-	state = {
-		auth: false,
-		width: window.innerWidth,
-		height: window.innerHeight,
-	};
+	constructor(props) {
+		super(props);
+		this.state = { auth: false, width: window.innerWidth, height: window.innerHeight };
+		this.getCookieUser = this.getCookieUser.bind(this);
+		this.logout = this.logout.bind(this);
+	}
+
 	UNSAFE_componentWillReceiveProps(nextProps) {
-		console.log('nextProps: ', nextProps);
 		const session = nextProps.session && nextProps.session[0] && nextProps.session[0];
 		if (session.status) {
 			this.setState({
@@ -37,7 +38,7 @@ class App extends Component {
 		}
 	}
 
-	getCookieUser = () => {
+	getCookieUser() {
 		const user = Cookies.get('users');
 		if (user && user === 'logined') {
 			this.setState({
@@ -48,15 +49,15 @@ class App extends Component {
 				auth: false,
 			});
 		}
-	};
+	}
 
-	logout = () => {
+	logout() {
 		Cookies.remove('users');
 		Cookies.remove('nameStaff');
 		this.setState({
 			auth: false,
 		});
-	};
+	}
 	componentDidMount() {
 		this.getCookieUser();
 	}
@@ -77,4 +78,5 @@ const mapStateToProps = ({ users }) => users;
 const mapDispatchToProps = {};
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 
+App.displayName = 'App';
 export default AppContainer;

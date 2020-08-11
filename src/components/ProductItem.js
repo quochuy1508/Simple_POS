@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import { requestAddToCart } from '../actions/productActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const ProductItem = ({ product, requestAddToCart }) => {
-	if (product.type_id !== 'simple') {
-		console.log(product);
-	}
 	const [dis, setDis] = useState(false);
-	const [hidden, setHidden] = useState(false);
 	const [chooseCart, setChooseCart] = useState(null);
 	return (
 		<div className="col-sm-3 rounded border">
@@ -44,7 +41,7 @@ const ProductItem = ({ product, requestAddToCart }) => {
 									data-backdrop="false"
 									role="dialog"
 									aria-labelledby="exampleModalLabel"
-									aria-hidden={hidden}
+									aria-hidden="false"
 								>
 									<div className="modal-dialog modal-lg" role="document">
 										<div className="modal-content w-100">
@@ -162,7 +159,7 @@ const ProductItem = ({ product, requestAddToCart }) => {
 					<img
 						src={product.image}
 						className="img-fluid ml-4"
-						alt="Responsive image"
+						alt={product.image}
 						width="110px !important"
 						height="100% !important"
 						// style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -173,8 +170,12 @@ const ProductItem = ({ product, requestAddToCart }) => {
 	);
 };
 
-const mapStateToProps = ({ products }) => products;
+// const mapStateToProps = ({ products }) => products;
 
+ProductItem.propTypes = {
+	product: PropTypes.object,
+	requestAddToCart: PropTypes.func,
+};
 const mapDispatchToProps = {
 	requestAddToCart,
 };

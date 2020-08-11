@@ -1,13 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { requestAuthenticateUser } from '../actions/loginActions';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<div
@@ -26,7 +23,7 @@ class Login extends Component {
 						}
 						return errors;
 					}}
-					onSubmit={(values, { setSubmitting }) => {
+					onSubmit={(values) => {
 						// console.log('Hello');
 						this.props.requestAuthenticateUser(values);
 					}}
@@ -38,7 +35,6 @@ class Login extends Component {
 						handleChange,
 						handleBlur,
 						handleSubmit,
-						isSubmitting,
 						/* and other goodies */
 					}) => (
 						<form onSubmit={handleSubmit}>
@@ -77,6 +73,10 @@ class Login extends Component {
 		);
 	}
 }
+
+Login.propTypes = {
+	requestAuthenticateUser: PropTypes.func,
+};
 
 const mapStateToProps = () => ({});
 
