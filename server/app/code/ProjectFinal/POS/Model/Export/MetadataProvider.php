@@ -3,18 +3,28 @@
 
 namespace ProjectFinal\POS\Model\Export;
 
-
 use Magento\Framework\Api\Search\DocumentInterface;
 
+/**
+ * Class MetadataProvider rewrite function getRowData to export status with label
+ */
 class MetadataProvider extends \Magento\Ui\Model\Export\MetadataProvider
 {
     const STATUS_PENDING = "Disable";
     const STATUS_ACTIVE = "Enabled";
 
+    /**
+     * Method getRowData custom status value when export
+     *
+     * @param DocumentInterface $document
+     * @param array $fields
+     * @param array $options
+     * @return array
+     */
     public function getRowData(DocumentInterface $document, $fields, $options)
     {
         $row = [];
-        $key = array_search ('status', $fields);
+        $key = array_search('status', $fields);
         foreach ($fields as $column) {
             if (isset($options[$column])) {
                 $key = $document->getCustomAttribute($column)->getValue();
@@ -25,8 +35,8 @@ class MetadataProvider extends \Magento\Ui\Model\Export\MetadataProvider
                 }
             } else {
                 $row[] = $document->getCustomAttribute($column)->getValue();
-                if($column == 'status'){
-                    switch ($row[$key]){
+                if ($column == 'status') {
+                    switch ($row[$key]) {
                         case 0:
                             $row[$key] = self::STATUS_PENDING;
                             break;

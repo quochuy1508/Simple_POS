@@ -3,12 +3,16 @@
 
 namespace ProjectFinal\POS\Model;
 
-
+/**
+ * Class Status get label for status property in Grid backend
+ *
+ */
 class Status implements \Magento\Framework\Data\OptionSourceInterface
 {
 
     /**
      * Get Grid row status type labels array.
+     *
      * @return array
      */
     public function getOptionArray()
@@ -31,6 +35,7 @@ class Status implements \Magento\Framework\Data\OptionSourceInterface
 
     /**
      * Get Grid row type array for option element.
+     *
      * @return array
      */
     public function getOptions()
@@ -43,7 +48,7 @@ class Status implements \Magento\Framework\Data\OptionSourceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function toOptionArray()
     {

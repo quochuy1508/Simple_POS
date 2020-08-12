@@ -3,11 +3,15 @@
 
 namespace ProjectFinal\POS\Block\Adminhtml\Staff\Edit;
 
+use ProjectFinal\POS\Block\Adminhtml\Staff\Edit\Tab\FormContact;
 
+/**
+ * Class Tabs manage tab in grid backend
+ */
 class Tabs extends \Magento\Backend\Block\Widget\Tabs
 {
     /**
-     *
+     * construct to build object Tabs
      */
     protected function _construct()
     {
@@ -18,7 +22,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
     }
 
     /**
-     * @return $this
+     * Method beforeToHtml
+     *
+     * @return \Magento\Backend\Block\Widget\Tabs|\Magento\Framework\View\Element\AbstractBlock
      * @throws \Exception
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -29,7 +35,9 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('General Information'),
                 'title' => __('general'),
-                'content' => $this->getLayout()->createBlock('ProjectFinal\POS\Block\Adminhtml\Staff\Edit\Tab\FormGeneralInfomation')
+                'content' => $this->getLayout()->createBlock(
+                    \ProjectFinal\POS\Block\Adminhtml\Staff\Edit\Tab\FormGeneralInfomation::class
+                )
                     ->toHtml(),
                 'active' => true
             ]
@@ -39,7 +47,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             [
                 'label' => __('Contact'),
                 'title' => __('contact-staff'),
-                'content' => $this->getLayout()->createBlock('ProjectFinal\POS\Block\Adminhtml\Staff\Edit\Tab\FormContact')
+                'content' => $this->getLayout()->createBlock(FormContact::class)
                     ->toHtml()
             ]
         );

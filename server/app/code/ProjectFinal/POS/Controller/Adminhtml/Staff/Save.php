@@ -5,14 +5,11 @@ namespace ProjectFinal\POS\Controller\Adminhtml\Staff;
 
 use ProjectFinal\POS\Controller\Adminhtml\Staff;
 
+/**
+ * Class Save save record staff
+ */
 class Save extends Staff
 {
-
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context)
-    {
-        parent::__construct($context);
-    }
 
     /**
      * @inheritDoc
@@ -29,23 +26,23 @@ class Save extends Staff
 
         if ($data) {
             if (array_key_exists("id", $data)) {
-                $staff_model = $this->_objectManager->create("ProjectFinal\POS\Model\Staff")->load($data["id"]);
+                $staffModel = $this->_objectManager->create(\ProjectFinal\POS\Model\Staff::class)->load($data["id"]);
                 if (strlen($data["password"]) === 0) {
                     unset($data["password"]);
                 }
             } else {
-                $staff_model = $this->_objectManager->create("ProjectFinal\POS\Model\Staff");
+                $staffModel = $this->_objectManager->create(\ProjectFinal\POS\Model\Staff::class);
                 if (strlen($data["password"]) === 0) {
                     $this->messageManager->addErrorMessage(__("Password require"));
                     return $resultRedirect->setPath('*/*/edit', ["id" => $this->getRequest()->getParam('id')]);
                 }
             }
 
-            $staff_model->setData($data);
-            unset($staff_model["password_confirmation"]);
-            unset($staff_model["form_key"]);
+            $staffModel->setData($data);
+            unset($staffModel["password_confirmation"]);
+            unset($staffModel["form_key"]);
             try {
-                $staff_model->save();
+                $staffModel->save();
 
                 $this->messageManager->addSuccessMessage(__("Staff was successfully save"));
             } catch (\Exception $e) {

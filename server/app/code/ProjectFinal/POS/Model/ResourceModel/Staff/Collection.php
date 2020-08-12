@@ -7,7 +7,9 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use ProjectFinal\POS\Model\Staff as Model;
 use ProjectFinal\POS\Model\ResourceModel\Staff as ResourceModel;
 
-
+/**
+ * Class Collection of Staff
+ */
 class Collection extends AbstractCollection
 {
     /**

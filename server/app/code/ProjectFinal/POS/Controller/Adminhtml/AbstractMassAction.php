@@ -3,7 +3,6 @@
 
 namespace ProjectFinal\POS\Controller\Adminhtml;
 
-
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
@@ -11,6 +10,9 @@ use Magento\Ui\Component\MassAction\Filter;
 use ProjectFinal\POS\Model\ResourceModel\Staff\CollectionFactory;
 use ProjectFinal\POS\Model\ResourceModel\Staff\Collection;
 
+/**
+ * Class AbstractMassAction
+ */
 abstract class AbstractMassAction extends \Magento\Backend\App\Action
 {
 
@@ -48,11 +50,12 @@ abstract class AbstractMassAction extends \Magento\Backend\App\Action
     }
 
     /**
-     * @return $this
+     * Method to redirect to implement
+     *
+     * @return \Magento\Backend\Model\View\Result\Redirect
      */
     public function execute()
     {
-//        echo "DA vao";
         try {
             $collection = $this->filter->getCollection($this->collectionFactory->create());
             return $this->massAction($collection);
@@ -65,17 +68,10 @@ abstract class AbstractMassAction extends \Magento\Backend\App\Action
     }
 
     /**
-     * @return bool
+     * Method to test
+     *
+     * @param Collection $collection
+     * @return mixed
      */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('ProjectFinal_POS::staff');
-    }
-
-    protected function getComponentRefererUrl()
-    {
-        return "*/*/index";
-    }
-
     abstract protected function massAction(Collection $collection);
 }

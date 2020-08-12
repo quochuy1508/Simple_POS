@@ -5,14 +5,14 @@ namespace ProjectFinal\POS\Controller\Adminhtml\Staff;
 
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\App\Action\HttpPostActionInterface;
-use ProjectFinal\POS\Controller\Adminhtml\AbstractMassAction;
 use ProjectFinal\POS\Controller\Adminhtml\Staff;
-use ProjectFinal\POS\Model\ResourceModel\Staff\Collection;
 use ProjectFinal\POS\Model\ResourceModel\Staff\CollectionFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Magento\Backend\App\Action\Context;
 
+/**
+ * Class MassDelete implement delete number of records
+ */
 class MassDelete extends Staff
 {
     /**
@@ -38,6 +38,8 @@ class MassDelete extends Staff
     protected $collectionFactory;
 
     /**
+     * Method to construct of object MassDelete
+     *
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
@@ -49,28 +51,11 @@ class MassDelete extends Staff
         $this->collectionFactory = $collectionFactory;
     }
 
-    protected function massAction(Collection $collection)
-    {
-        var_dump($collection->getData());
-        die();
-        $count = 0;
-        foreach ($collection as $staffModel) {
-            $staffModel->delete();
-            $count++;
-        }
-        $this->messageManager->addSuccessMessage('You have deleted %1 staff', $count);
-
-        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $resultRedirect->setPath($this->getComponentRefererUrl());
-
-        return $resultRedirect;
-    }
-
-    protected function getComponentRefererUrl()
-    {
-        return "*/*/index";
-    }
-
+    /**
+     * Method to execute logic of massDelete
+     *
+     * @return \Magento\Backend\Model\View\Result\Redirect|ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         try {
@@ -79,7 +64,10 @@ class MassDelete extends Staff
             foreach ($collection as $item) {
                 $item->delete();
             }
-            $this->messageManager->addSuccessMessage(__('A total of %1 element(s) have been deleted.', $collectionSize));
+            $this->messageManager->addSuccessMessage(__(
+                'A total of %1 element(s) have been deleted.',
+                $collectionSize
+            ));
 
             /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
             $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);

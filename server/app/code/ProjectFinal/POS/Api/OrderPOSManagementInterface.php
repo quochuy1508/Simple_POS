@@ -3,7 +3,6 @@
 
 namespace ProjectFinal\POS\Api;
 
-
 use Magento\Checkout\Api\Data\ShippingInformationInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Quote\Api\Data\AddressInterface;
@@ -20,7 +19,7 @@ interface OrderPOSManagementInterface
      * @param ShippingInformationInterface $addressInformation
      * @param AddressInterface|null $billingAddress
      * @return int Order ID.
-     *@throws CouldNotSaveException
+     * @throws CouldNotSaveException
      */
     public function savePaymentInformationAndShippingInformation(
         $cartId,

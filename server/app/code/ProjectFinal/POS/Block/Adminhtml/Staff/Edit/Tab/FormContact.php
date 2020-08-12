@@ -3,13 +3,15 @@
 
 namespace ProjectFinal\POS\Block\Adminhtml\Staff\Edit\Tab;
 
-
+/**
+ * Class FormContact manage info of name telephone and email
+ */
 class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Backend\Block\Widget\Tab\TabInterface
 {
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager;
+    protected $objectManager;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -25,14 +27,15 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        array $data = array()
-    )
-    {
-        $this->_objectManager = $objectManager;
+        array $data = []
+    ) {
+        $this->objectManager = $objectManager;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
     /**
+     * Method _prepareLayout
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _prepareLayout()
@@ -41,6 +44,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method _prepareForm
+     *
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -49,37 +54,38 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
         $model = $this->_coreRegistry->registry("current_staff");
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix("page_");
-        $fieldset = $form->addFieldset("base_fieldset", array("legend" => __("Contact")));
+        $fieldset = $form->addFieldset("base_fieldset", ["legend" => __("Contact")]);
         if ($model->getId()) {
-            $fieldset->addField("staff_id", "hidden", array("name" => "staff_id"));
+            $fieldset->addField("staff_id", "hidden", ["name" => "staff_id"]);
         }
-        $fieldset->addField("name", "text", array(
+        $fieldset->addField("name", "text", [
             "label" => __("Name"),
 
             "class" => "required-entry",
             "required" => true,
             "name" => "name",
             "disabled" => false,
-        ));
-        $fieldset->addField("email", "text", array(
+        ]);
+        $fieldset->addField("email", "text", [
             "label" => __("Email"),
             "class" => "input-text",
             "name" => "email",
             "disabled" => false,
-        ));
-        $fieldset->addField("telephone", "text", array(
+        ]);
+        $fieldset->addField("telephone", "text", [
             "label" => __("Phone"),
             "class" => "input-text",
             "name" => "telephone",
             "disabled" => false,
-        ));
+        ]);
         $form->setValues($model->getData());
         $this->setForm($form);
         return parent::_prepareForm();
-
     }
 
     /**
+     * Method getStaff
+     *
      * @return mixed
      */
     public function getStaff()
@@ -88,6 +94,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method getPageTitle
+     *
      * @return \Magento\Framework\Phrase
      */
     public function getPageTitle()
@@ -98,6 +106,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method getTabLabel
+     *
      * @return \Magento\Framework\Phrase
      */
     public function getTabLabel()
@@ -106,6 +116,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method getTabTitle
+     *
      * @return \Magento\Framework\Phrase
      */
     public function getTabTitle()
@@ -114,6 +126,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method canShowTab
+     *
      * @return bool
      */
     public function canShowTab()
@@ -122,6 +136,8 @@ class FormContact extends \Magento\Backend\Block\Widget\Form\Generic implements 
     }
 
     /**
+     * Method isHidden
+     *
      * @return bool
      */
     public function isHidden()

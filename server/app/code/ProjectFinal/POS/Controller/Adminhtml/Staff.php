@@ -3,26 +3,15 @@
 
 namespace ProjectFinal\POS\Controller\Adminhtml;
 
-
-use Magento\Framework\App\ResponseInterface;
-
 /**
- * Class Vendor
- * @package ProjectFinal\POS\Controller\Adminhtm
+ * Abstract class Staff
  */
 abstract class Staff extends \Magento\Backend\App\Action
 {
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context
-    ) {
-        parent::__construct($context);
-    }
-
 
     /**
+     * Allow to anonymous assess to resource
+     *
      * @return bool
      */
     protected function _isAllowed()

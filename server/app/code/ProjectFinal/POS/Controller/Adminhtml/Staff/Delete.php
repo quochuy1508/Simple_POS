@@ -3,10 +3,12 @@
 
 namespace ProjectFinal\POS\Controller\Adminhtml\Staff;
 
-
-use Magento\Framework\App\ResponseInterface;
 use ProjectFinal\POS\Controller\Adminhtml\Staff;
+use ProjectFinal\POS\Model\Staff as StaffModel;
 
+/**
+ * Class Delete to delete staff in grid backend
+ */
 class Delete extends Staff
 {
 
@@ -19,7 +21,7 @@ class Delete extends Staff
         $staffId = (int)$this->getRequest()->getParam("id");
 
         if ($staffId > 0) {
-            $staffModel = $this->_objectManager->create('ProjectFinal\POS\Model\Staff')->load($staffId);
+            $staffModel = $this->_objectManager->create(StaffModel::class)->load($staffId);
 
             try {
                 $staffModel->delete();

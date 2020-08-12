@@ -3,11 +3,14 @@
 
 namespace ProjectFinal\POS\Model;
 
-
 use Magento\Framework\Model\AbstractModel;
 use ProjectFinal\POS\Api\Data\StaffInterface;
 use ProjectFinal\POS\Model\ResourceModel\Staff as ResourceModel;
 
+/**
+ * Class Staff description information of staff in POS system
+ *
+ */
 class Staff extends AbstractModel implements StaffInterface
 {
     /**
@@ -18,14 +21,14 @@ class Staff extends AbstractModel implements StaffInterface
     /**
      * @var string
      */
-    protected $_cacheTag = 'pos_staff';
+    protected $cacheTag = 'pos_staff';
 
     /**
      * Prefix of model events names.
      *
      * @var string
      */
-    protected $_eventPrefix = 'pos_staff';
+    protected $eventPrefix = 'pos_staff';
 
     /**
      * Initialize resource model.
@@ -35,7 +38,6 @@ class Staff extends AbstractModel implements StaffInterface
     {
         $this->_init(ResourceModel::class);
     }
-
 
     /**
      * @inheritDoc
@@ -48,11 +50,10 @@ class Staff extends AbstractModel implements StaffInterface
     /**
      * @inheritDoc
      */
-    public function setID($id)
+    public function setId($id)
     {
         return $this->setData(self::ID, $id);
     }
-
 
     /**
      * @inheritDoc

@@ -3,24 +3,26 @@
 
 namespace ProjectFinal\POS\Model;
 
-use Magento\Framework\Controller\Result\JsonFactory;
 use ProjectFinal\POS\Model\ResourceModel\Staff\CollectionFactory as StaffCollectionFactory;
 
+/**
+ * Class StaffManagement for staff authentication in React
+ *
+ */
 class StaffManagement implements \ProjectFinal\POS\Api\StaffManagementInterface
 {
     /**
      * @var StaffCollectionFactory
      */
-    protected $staffCollectionFactory;
+    protected $collectionFactory;
 
     /**
-     * @param StaffCollectionFactory $staffCollectionFactory
+     * @param StaffCollectionFactory $collectionFactory
      */
     public function __construct(
-        StaffCollectionFactory $staffCollectionFactory
-    )
-    {
-        $this->staffCollectionFactory = $staffCollectionFactory;
+        StaffCollectionFactory $collectionFactory
+    ) {
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -30,9 +32,9 @@ class StaffManagement implements \ProjectFinal\POS\Api\StaffManagementInterface
     {
 
         try {
-            $staff = $this->staffCollectionFactory->create()
+            $staff = $this->collectionFactory->create()
                 ->addFieldToSelect("*")
-                ->addFieldToFilter("username", array("eq" => $username))
+                ->addFieldToFilter("username", ["eq" => $username])
                 ->getFirstItem();
 
             $staffId = (int)$staff->getId();
@@ -43,24 +45,24 @@ class StaffManagement implements \ProjectFinal\POS\Api\StaffManagementInterface
                     "status" => false
                 ]];
                 return $massage;
-            } else if ((int)$staff->getData("status") === 0) {
-                $massage = array(array(
+            } elseif ((int)$staff->getData("status") === 0) {
+                $massage = [[
                     "code" => "401",
                     "message" => "This account isn't active. Please connect to admin of website",
                     "status" => false
-                ));
+                ]];
                 return $massage;
-            } else if ($staff->getData("password") !== $password) {
-                $massage = array(array(
+            } elseif ($staff->getData("password") !== $password) {
+                $massage = [[
                     "code" => "401",
                     "message" => "Password not correct. Please connect to admin of website",
                     "status" => false
-                ));
+                ]];
                 return $massage;
             }
             return [$staff->getData()];
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
     }
 }
