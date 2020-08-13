@@ -6,6 +6,7 @@ import HomeConnected from './pages/Home';
 import LoginConnected from './pages/Login';
 import Cookies from 'js-cookie';
 import './App.css';
+import PropTypes from 'prop-types';
 
 class App extends Component {
 	constructor(props) {
@@ -72,7 +73,9 @@ class App extends Component {
 		);
 	}
 }
-
+App.propTypes = {
+	session: PropTypes.object,
+};
 const mapStateToProps = ({ users }) => users;
 
 const mapDispatchToProps = {};

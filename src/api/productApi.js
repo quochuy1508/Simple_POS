@@ -1,13 +1,19 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
-// import CONFIG from '@/utils/config';
-// import log from '@/utils/log';
 
-// user
+/**
+ * Method queryCourses
+ *
+ * @param {object} params
+ */
 export async function queryCourses(params) {
 	return request(`http://localhost:6868/api/courses/?${stringify(params)}`);
 }
 
+/**
+ *
+ * @param {int|string} id
+ */
 export function detailCourses(id) {
 	// const urlRequest = `${API_ENDPOINT}/companies/${id}`;
 	return request(`http://localhost:6868/api/courses/${id}`, {
@@ -15,6 +21,10 @@ export function detailCourses(id) {
 	});
 }
 
+/**
+ *
+ * @param {int|string} id
+ */
 export async function removeCourses(id) {
 	'id', id;
 	return request(`http://localhost:6868/api/courses/${id}`, {
@@ -22,6 +32,10 @@ export async function removeCourses(id) {
 	});
 }
 
+/**
+ *
+ * @param {object} params
+ */
 export async function addCourses(params) {
 	return request(`http://localhost:6868/api/courses`, {
 		method: 'POST',
@@ -31,10 +45,14 @@ export async function addCourses(params) {
 		},
 	});
 }
-
+/**
+ *
+ * @param {int|string} id
+ * @param {object} params
+ */
 export async function updateCourses(id, params) {
-	// const urlRequest = `${API_ENDPOINT}/companies/${id}`;
 	const urlRequest = `http://localhost:6868/api/courses/${id}`;
+
 	return request(urlRequest, {
 		method: 'PUT',
 		body: {
@@ -44,6 +62,10 @@ export async function updateCourses(id, params) {
 	});
 }
 
+/**
+ *
+ * @param {object} params
+ */
 export async function queryCoursesAll(params) {
 	const { filter, sort, range } = params;
 	const query = {
@@ -55,6 +77,10 @@ export async function queryCoursesAll(params) {
 	// return request(`http://localhost:6868/Courses/get/all`);
 }
 
+/**
+ *
+ * @param {object} params
+ */
 export async function buyCourses(params) {
 	return request(`http://localhost:6868/api/userCourse`, {
 		method: 'POST',
@@ -65,6 +91,10 @@ export async function buyCourses(params) {
 	});
 }
 
+/**
+ *
+ * @param {object} params
+ */
 export async function queryUserCourseAll(params) {
 	const { filter, sort, range } = params;
 	const query = {
@@ -76,6 +106,11 @@ export async function queryUserCourseAll(params) {
 	// return request(`http://localhost:6868/Courses/get/all`);
 }
 
+/**
+ *
+ * @param {int|string} id
+ * @param {object} params
+ */
 export async function updateUserCourse(id, params) {
 	// const urlRequest = `${API_ENDPOINT}/companies/${id}`;
 	const urlRequest = `http://localhost:6868/api/userCourse/${id}`;
@@ -88,6 +123,10 @@ export async function updateUserCourse(id, params) {
 	});
 }
 
+/**
+ *
+ * @param {object} params
+ */
 export async function updateUserCourseByUserId(params) {
 	// const urlRequest = `${API_ENDPOINT}/companies/${id}`;
 	const urlRequest = `http://localhost:6868/api/userCourse/update/userId`;

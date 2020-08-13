@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { requestGetProduct } from '../actions/productActions';
 import ProductItem from './ProductItem';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 import './pagination.css';
 const ProductList = ({ requestGetProduct, products }) => {
 	const [currentPage, setCurrentPage] = useState(0);
@@ -47,6 +48,10 @@ const ProductList = ({ requestGetProduct, products }) => {
 	);
 };
 
+ProductList.propTypes = {
+	requestGetProduct: PropTypes.func,
+	products: PropTypes.object,
+};
 const mapStateToProps = ({ products }) => products;
 
 const mapDispatchToProps = {
